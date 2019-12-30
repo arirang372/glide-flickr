@@ -46,26 +46,21 @@ public class FlickrPhotoGridFragment extends Fragment implements PhotoViewer {
 
 	private PhotoAdapter adapter;
 	private List<Photo> currentPhotos;
-	private GlideRequest<Drawable> fullRequest;
 	private RecyclerView grid;
 	private GridLayoutManager layoutManager;
-	private int photoSize;
-	private GlideRequest<Drawable> preloadRequest;
-	private boolean thumbnail;
-	private GlideRequest<Drawable> thumbnailRequest;
 
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		Bundle args = Preconditions.checkNotNull(getArguments());
-		photoSize = args.getInt(IMAGE_SIZE_KEY);
-		thumbnail = args.getBoolean(THUMBNAIL_KEY);
+		int photoSize = args.getInt(IMAGE_SIZE_KEY);
+		boolean thumbnail = args.getBoolean(THUMBNAIL_KEY);
 
-		fullRequest = GlideApp.with(this).asDrawable().centerCrop();
+		GlideRequest<Drawable> fullRequest = GlideApp.with(this).asDrawable().centerCrop();
 
-		thumbnailRequest =
+		GlideRequest<Drawable> thumbnailRequest =
 				GlideApp.with(this).asDrawable().centerCrop().override(Api.SQUARE_THUMB_SIZE);
 
-		preloadRequest = thumbnail ? thumbnailRequest.clone().priority(Priority.HIGH) : fullRequest;
+		GlideRequest<Drawable> preloadRequest = thumbnail ? thumbnailRequest.clone().priority(Priority.HIGH) : fullRequest;
 
 		final View result = inflater.inflate(R.layout.flickr_photo_grid, container, false);
 

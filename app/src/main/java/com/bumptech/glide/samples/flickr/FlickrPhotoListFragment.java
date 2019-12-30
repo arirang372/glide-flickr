@@ -48,6 +48,16 @@ public class FlickrPhotoListFragment extends Fragment implements PhotoViewer {
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		final View result = inflater.inflate(R.layout.flickr_photo_list, container, false);
+		preloadSizeProvider = new ViewPreloadSizeProvider<>();
+
+		final GlideRequests glideRequests = GlideApp.with(this);
+		fullRequest = glideRequests.asDrawable().centerCrop().placeholder(new ColorDrawable(Color.GRAY));
+		thumbRequest =
+				glideRequests
+						.asDrawable()
+						.diskCacheStrategy(DiskCacheStrategy.DATA)
+						.override(Api.SQUARE_THUMB_SIZE)
+						.transition(withCrossFade());
 
 		list = result.findViewById(R.id.flickr_photo_list);
 		layoutManager = new LinearLayoutManager(getActivity());
@@ -55,7 +65,6 @@ public class FlickrPhotoListFragment extends Fragment implements PhotoViewer {
 		adapter = new FlickrPhotoListAdapter(preloadSizeProvider, fullRequest, thumbRequest);
 		list.setAdapter(adapter);
 
-		preloadSizeProvider = new ViewPreloadSizeProvider<>();
 		RecyclerViewPreloader<Photo> preloader =
 				new RecyclerViewPreloader<>(
 						GlideApp.with(this), adapter, preloadSizeProvider, PRELOAD_AHEAD_ITEMS);
@@ -65,17 +74,6 @@ public class FlickrPhotoListFragment extends Fragment implements PhotoViewer {
 		if (currentPhotos != null) {
 			adapter.setPhotos(currentPhotos);
 		}
-
-		final GlideRequests glideRequests = GlideApp.with(this);
-		fullRequest =
-				glideRequests.asDrawable().centerCrop().placeholder(new ColorDrawable(Color.GRAY));
-
-		thumbRequest =
-				glideRequests
-						.asDrawable()
-						.diskCacheStrategy(DiskCacheStrategy.DATA)
-						.override(Api.SQUARE_THUMB_SIZE)
-						.transition(withCrossFade());
 
 		list.setRecyclerListener(
 				new RecyclerView.RecyclerListener() {
