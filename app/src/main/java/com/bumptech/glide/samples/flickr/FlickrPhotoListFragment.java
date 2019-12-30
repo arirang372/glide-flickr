@@ -1,9 +1,7 @@
 package com.bumptech.glide.samples.flickr;
 
-import java.util.Collections;
 import java.util.List;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -11,19 +9,15 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.bumptech.glide.ListPreloader;
-import com.bumptech.glide.RequestBuilder;
 import com.bumptech.glide.integration.recyclerview.RecyclerViewPreloader;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.samples.flickr.FlickrPhotoListAdapter.PhotoTitleViewHolder;
 import com.bumptech.glide.samples.flickr.api.Api;
 import com.bumptech.glide.samples.flickr.api.Photo;
 import com.bumptech.glide.util.ViewPreloadSizeProvider;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -34,81 +28,6 @@ import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOption
  * A fragment that shows cropped image thumbnails half the width of the screen in a scrolling list.
  */
 public class FlickrPhotoListFragment extends Fragment implements PhotoViewer {
-
-	private final class FlickrPhotoListAdapter extends RecyclerView.Adapter<PhotoTitleViewHolder>
-			implements ListPreloader.PreloadModelProvider<Photo> {
-
-		private final LayoutInflater inflater;
-		private List<Photo> photos = Collections.emptyList();
-
-		FlickrPhotoListAdapter() {
-			this.inflater = LayoutInflater.from(getActivity());
-		}
-
-		@Override
-		public int getItemCount() {
-			return photos.size();
-		}
-
-		@Override
-		public long getItemId(int i) {
-			return RecyclerView.NO_ID;
-		}
-
-		@NonNull
-		@Override
-		public List<Photo> getPreloadItems(int position) {
-			return photos.subList(position, position + 1);
-		}
-
-		@Nullable
-		@Override
-		public RequestBuilder<Drawable> getPreloadRequestBuilder(@NonNull Photo item) {
-			return fullRequest.thumbnail(thumbRequest.load(item)).load(item);
-		}
-
-		@Override
-		public void onBindViewHolder(PhotoTitleViewHolder holder, int position) {
-			final Photo current = photos.get(position);
-			fullRequest.load(current).thumbnail(thumbRequest.load(current)).into(holder.imageView);
-
-			holder.imageView.setOnClickListener(
-					new View.OnClickListener() {
-						@Override
-						public void onClick(View view) {
-							Intent intent = FullscreenActivity.getIntent(getActivity(), current);
-							startActivity(intent);
-						}
-					});
-
-			holder.titleView.setText(current.getTitle());
-		}
-
-		@Override
-		public PhotoTitleViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-			View view = inflater.inflate(R.layout.flickr_photo_list_item, parent, false);
-			PhotoTitleViewHolder vh = new PhotoTitleViewHolder(view);
-			preloadSizeProvider.setView(vh.imageView);
-			return vh;
-		}
-
-		void setPhotos(List<Photo> photos) {
-			this.photos = photos;
-			notifyDataSetChanged();
-		}
-	}
-
-	private static final class PhotoTitleViewHolder extends RecyclerView.ViewHolder {
-
-		private final ImageView imageView;
-		private final TextView titleView;
-
-		PhotoTitleViewHolder(View itemView) {
-			super(itemView);
-			imageView = itemView.findViewById(R.id.photo_view);
-			titleView = itemView.findViewById(R.id.title_view);
-		}
-	}
 
 	private static final int PRELOAD_AHEAD_ITEMS = 5;
 	private static final String STATE_POSITION_INDEX = "state_position_index";
@@ -133,7 +52,7 @@ public class FlickrPhotoListFragment extends Fragment implements PhotoViewer {
 		list = result.findViewById(R.id.flickr_photo_list);
 		layoutManager = new LinearLayoutManager(getActivity());
 		list.setLayoutManager(layoutManager);
-		adapter = new FlickrPhotoListAdapter();
+		adapter = new FlickrPhotoListAdapter(preloadSizeProvider, fullRequest, thumbRequest);
 		list.setAdapter(adapter);
 
 		preloadSizeProvider = new ViewPreloadSizeProvider<>();
