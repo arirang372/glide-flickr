@@ -3,17 +3,14 @@ package com.bumptech.glide.samples.flickr;
 import java.util.List;
 
 import android.graphics.Rect;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.Priority;
 import com.bumptech.glide.integration.recyclerview.RecyclerViewPreloader;
 import com.bumptech.glide.samples.flickr.PhotoAdapter.PhotoViewHolder;
-import com.bumptech.glide.samples.flickr.api.Api;
 import com.bumptech.glide.samples.flickr.api.Photo;
 import com.bumptech.glide.util.FixedPreloadSizeProvider;
 import com.bumptech.glide.util.Preconditions;
@@ -66,8 +63,7 @@ public class FlickrPhotoGridFragment extends Fragment implements PhotoViewer {
 		grid.addItemDecoration(
 				new RecyclerView.ItemDecoration() {
 					@Override
-					public void getItemOffsets(
-							Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+					public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
 						outRect.set(gridMargin, gridMargin, gridMargin, gridMargin);
 					}
 				});
@@ -86,11 +82,9 @@ public class FlickrPhotoGridFragment extends Fragment implements PhotoViewer {
 		adapter = new PhotoAdapter(photoSize, thumbnail);
 		grid.setAdapter(adapter);
 
-		FixedPreloadSizeProvider<Photo> preloadSizeProvider =
-				new FixedPreloadSizeProvider<>(photoSize, photoSize);
+		FixedPreloadSizeProvider<Photo> preloadSizeProvider = new FixedPreloadSizeProvider<>(photoSize, photoSize);
 		RecyclerViewPreloader<Photo> preloader =
-				new RecyclerViewPreloader<>(
-						Glide.with(this), adapter, preloadSizeProvider, args.getInt(PRELOAD_KEY));
+				new RecyclerViewPreloader<>( Glide.with(this), adapter, preloadSizeProvider, args.getInt(PRELOAD_KEY));
 		grid.addOnScrollListener(preloader);
 
 		if (currentPhotos != null) {

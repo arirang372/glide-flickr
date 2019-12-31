@@ -5,11 +5,9 @@ import java.util.List;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.ListPreloader;
@@ -19,6 +17,7 @@ import com.bumptech.glide.samples.flickr.api.Photo;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class PhotoAdapter extends RecyclerView.Adapter<PhotoViewHolder>
@@ -26,11 +25,11 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoViewHolder>
 
 	static class PhotoViewHolder extends RecyclerView.ViewHolder {
 
-		public final ImageView imageView;
+		public final AppCompatImageView imageView;
 
 		PhotoViewHolder(View itemView) {
 			super(itemView);
-			imageView = (ImageView) itemView;
+			imageView = (AppCompatImageView) itemView;
 		}
 	}
 
