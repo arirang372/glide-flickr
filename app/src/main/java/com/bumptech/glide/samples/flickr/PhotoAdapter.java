@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.bumptech.glide.ListPreloader;
 import com.bumptech.glide.RequestBuilder;
 import com.bumptech.glide.samples.flickr.PhotoAdapter.PhotoViewHolder;
@@ -34,19 +35,13 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoViewHolder>
 	}
 
 	private Context context;
-	private GlideRequest<Drawable> fullRequest;
 	private int photoSize;
 	private List<Photo> photos = Collections.emptyList();
-	private GlideRequest<Drawable> preloadRequest;
 	private boolean thumbnail;
-	private GlideRequest<Drawable> thumbnailRequest;
 
-	public PhotoAdapter(int photoSize, boolean thumbnail, GlideRequest<Drawable> fullRequest, GlideRequest<Drawable> preloadRequest, GlideRequest<Drawable> thumbnailRequest) {
+	public PhotoAdapter(int photoSize, boolean thumbnail) {
 		this.photoSize = photoSize;
 		this.thumbnail = thumbnail;
-		this.fullRequest = fullRequest;
-		this.thumbnailRequest = thumbnailRequest;
-		this.preloadRequest = preloadRequest;
 	}
 
 	@Override
@@ -73,15 +68,15 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoViewHolder>
 	@Nullable
 	@Override
 	public RequestBuilder<?> getPreloadRequestBuilder(@NonNull Photo item) {
-		return preloadRequest.load(item);
+		return Glide.with(context).asDrawable().centerCrop().load(item);
 	}
 
 	@Override
 	public void onBindViewHolder(@NonNull PhotoViewHolder holder, int position) {
 		final Photo current = photos.get(position);
-		fullRequest
+		Glide.with(context).asDrawable().centerCrop()
 				.load(current)
-				.thumbnail(thumbnail ? thumbnailRequest.load(current) : null)
+				.thumbnail(thumbnail ? Glide.with(context).load(current) : null)
 				.into(holder.imageView);
 
 		holder.imageView.setOnClickListener(

@@ -55,13 +55,6 @@ public class FlickrPhotoGridFragment extends Fragment implements PhotoViewer {
 		int photoSize = args.getInt(IMAGE_SIZE_KEY);
 		boolean thumbnail = args.getBoolean(THUMBNAIL_KEY);
 
-		GlideRequest<Drawable> fullRequest = GlideApp.with(this).asDrawable().centerCrop();
-
-		GlideRequest<Drawable> thumbnailRequest =
-				GlideApp.with(this).asDrawable().centerCrop().override(Api.SQUARE_THUMB_SIZE);
-
-		GlideRequest<Drawable> preloadRequest = thumbnail ? thumbnailRequest.clone().priority(Priority.HIGH) : fullRequest;
-
 		final View result = inflater.inflate(R.layout.flickr_photo_grid, container, false);
 
 		final int gridMargin = getResources().getDimensionPixelOffset(R.dimen.grid_margin);
@@ -90,7 +83,7 @@ public class FlickrPhotoGridFragment extends Fragment implements PhotoViewer {
 		int heightCount = getResources().getDisplayMetrics().heightPixels / photoSize;
 		grid.getRecycledViewPool().setMaxRecycledViews(0, spanCount * heightCount * 2);
 		grid.setItemViewCacheSize(0);
-		adapter = new PhotoAdapter(photoSize, thumbnail, fullRequest, preloadRequest, thumbnailRequest);
+		adapter = new PhotoAdapter(photoSize, thumbnail);
 		grid.setAdapter(adapter);
 
 		FixedPreloadSizeProvider<Photo> preloadSizeProvider =
