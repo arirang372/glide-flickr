@@ -15,8 +15,6 @@ P
 Xapp/src/main/java/com/bumptech/glide/samples/flickr/api/FlickrQueryResponseListener.java,a\e\ae469a02417eb4309e37280caddc1ff5e3656eb2
 r
 Bapp/src/main/java/com/bumptech/glide/samples/flickr/api/Photo.java,9\e\9e0a02e330a1aaa04f1fdab4926e231356ac503d
-x
-Happ/src/main/java/com/bumptech/glide/samples/flickr/api/RecentQuery.java,f\3\f3811038c73cb1d2eeefd35eead8acf73a3e7c9e
 }
 Mapp/src/main/java/com/bumptech/glide/samples/flickr/FlickrGlideExtension.java,e\c\ec61f983db75315842f9846794fdfcfcf4120264
 z
@@ -37,3 +35,9 @@ x
 Happ/src/main/java/com/bumptech/glide/samples/flickr/api/SearchQuery.java,0\f\0f08b062c0d017644b3164cd6a375dbea279a866
 ‚
 Rapp/src/main/java/com/bumptech/glide/samples/flickr/api/PhotoJsonStringParser.java,9\7\97606f71744750a5041233bcd1dc7d66477cebc4
+u
+Eapp/src/main/java/com/bumptech/glide/samples/flickr/PhotoAdapter.java,b\6\b633b496b4ff0df2bbb7f457d10c077fd0137a39
+
+Oapp/src/main/java/com/bumptech/glide/samples/flickr/FlickrPhotoListAdapter.java,3\8\387022d6c686506bc560483277eed08c676753c4
+ƒ
+Sapp/src/main/java/com/bumptech/glide/samples/flickr/BackgroundThumbnailFetcher.java,e\7\e72a852c63374668c6719d293931011cf78f3329

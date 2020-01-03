@@ -1,4 +1,4 @@
 
-Hsquid:S3599 ",Use another way to initialize this instance.(ú£ñ“øÿÿÿÿ
-usquid:S1171!"YMove the contents of this initializer to a standard constructor or to field initializers.(ÒÌâ–øÿÿÿÿ
-‹squid:S1845k"oRename method "getPhotoUrl" to prevent any misunderstanding/clash with method "getPhotoURL" defined on line 91.(¦£ž¯ýÿÿÿÿ
+Hsquid:S3599",Use another way to initialize this instance.(ú£ñ“øÿÿÿÿ
+usquid:S1171 "YMove the contents of this initializer to a standard constructor or to field initializers.(ÒÌâ–øÿÿÿÿ
+‹squid:S1845j"oRename method "getPhotoUrl" to prevent any misunderstanding/clash with method "getPhotoURL" defined on line 90.(¦£ž¯ýÿÿÿÿ

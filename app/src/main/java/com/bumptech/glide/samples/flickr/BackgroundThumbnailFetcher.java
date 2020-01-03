@@ -19,7 +19,7 @@ public class BackgroundThumbnailFetcher implements Runnable  {
 
 	private boolean isCancelled;
 
-	public BackgroundThumbnailFetcher(Context context, List<Photo> photos) {
+	public 	BackgroundThumbnailFetcher(Context context, List<Photo> photos) {
 		this.context = context;
 		this.photos = photos;
 	}
